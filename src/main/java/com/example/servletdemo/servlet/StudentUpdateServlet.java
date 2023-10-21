@@ -4,6 +4,7 @@ import com.example.servletdemo.dao.StudentDAO;
 import com.example.servletdemo.dao.impl.StudentDAOImpl;
 import com.example.servletdemo.entity.Student;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -13,6 +14,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 @WebServlet("/student-update")
 public class StudentUpdateServlet extends HttpServlet {
@@ -25,8 +27,9 @@ public class StudentUpdateServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-        resp.sendRedirect("student-list");
+//        Student student = studentDAO.findById(Integer.parseInt(req.getParameter("id")));
+//        req.setAttribute("student", student);
+//        req.getRequestDispatcher("/studentUpdate.jsp").forward(req,resp);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -34,16 +37,18 @@ public class StudentUpdateServlet extends HttpServlet {
 
         try {
             Student student = new Student();
+            student.setId(Integer.parseInt(request.getParameter("id")));
             student.setName(request.getParameter("name"));
             student.setCode(request.getParameter("code"));
             String birthday = request.getParameter("birthday");
             student.setBirthday(dateFormat.parse(birthday));
             studentDAO.updateStudent(student);
 
-            response.sendRedirect("student-list");
+            List<Student> students = studentDAO.getAll();
+            request.setAttribute("students", students);
+            request.getRequestDispatcher("student.jsp").forward(request, response);
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
     }
-
 }

@@ -45,14 +45,28 @@ public class StudentDAOImpl implements StudentDAO {
 
     @Override
     public Student findById(int id) {
-        Query query = en.createQuery("SELECT s FROM Student s WHERE s.id = :id");
-        query.setParameter("id", id);
-        try {
-            return (Student) query.getSingleResult();
-        } catch (NoResultException ex) {
-            System.out.println(ex.getMessage());
-            return null;
+//        Query query = en.createQuery("SELECT s FROM Student s WHERE s.id = :id");
+//        query.setParameter("id", id);
+//        try {
+//            return (Student) query.getSingleResult();
+//        } catch (NoResultException ex) {
+//            System.out.println(ex.getMessage());
+//            return null;
+//        }
+        return en.find(Student.class, id);
+    }
+
+    @Override
+    public List<Student> searchStudent(String keyword) {
+        Query query  = en.createQuery("select s from Student s");
+        List<Student> students = query.getResultList();
+        List<Student> result = new ArrayList<>();
+        for (Student user : students) {
+            if (user.getName().contains(keyword)) {
+                result.add(user);
+            }
         }
+        return result;
     }
 
     @Override

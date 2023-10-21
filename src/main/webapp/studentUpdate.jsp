@@ -13,12 +13,13 @@
 <body>
 <h2>Update Student Information</h2>
 <form action="student-update" method="post">
+    <input type="hidden" name="id" value="${student.id}"><br><br>
     <label for="name">Name:</label>
-    <input type="text" id="name" name="name" value=""><br><br>
+    <input type="text" id="name" name="name" value="${student.name}"><br><br>
     <label for="code">Code:</label>
-    <input type="text" id="code" name="code" value=""><br><br>
+    <input type="text" id="code" name="code" value="${student.code}"><br><br>
     <label for="birthday">Birthday:</label>
-    <input type="text" id="birthday" name="birthday" value=""><br><br>
+    <input type="date" id="birthday" name="birthday" value="${student.birthday}"><br><br>
     <input type="submit" value="Update">
 </form>
 </body>
