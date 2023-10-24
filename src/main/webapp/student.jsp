@@ -29,64 +29,68 @@
             </nav>
         </div>
         <div class="container">
-            <h2>Add Student</h2>
-            <form action="student-create" method="post">
-                <label for="name">Name:</label>
-                <input type="text" id="name" name="name">
-                <br><br>
-                <label for="age">code:</label>
-                <input type="text" id="age" name="code">
-                <br><br>
-                <label for="birthday">Birthday:</label>
-                <input type="date" id="birthday" name='birthday'>
-                <br><br>
-                <input type="submit" value="Add Student">
-            </form>
-        </div>
-        <div class="container">
-            <div>
-                <h2>Student List</h2>
+            <div class="row">
+                <div class="col-3">
+                    <h2>Add Student</h2>
+                    <form action="student-create" method="post">
+                        <label for="name">Name:</label>
+                        <input type="text" id="name" name="name">
+                        <br><br>
+                        <label for="age">code:</label>
+                        <input type="text" id="age" name="code">
+                        <br><br>
+                        <label for="birthday">Birthday:</label>
+                        <input type="date" id="birthday" name='birthday'>
+                        <br><br>
+                        <input type="submit" value="Add Student">
+                    </form>
+                </div>
+                <div class="col-9">
+                    <div>
+                        <h2>Student List</h2>
+                    </div>
+                    <table  class="table table-striped">
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Code</th>
+                            <th scope="col">Birthday</th>
+                            <th scope="col">Delete</th>
+                            <th scope="col">Update</th>
+                        </tr>
+                        <% List<Student> students = (List<Student>) request.getAttribute("students");
+                            for (Student student : students) {
+                        %>
+                        <tr>
+                            <td scope="row">
+                                <%= student.getId() %>
+                            </td>
+                            <td>
+                                <%= student.getName() %>
+                            </td>
+                            <td>
+                                <%= student.getCode() %>
+                            </td>
+                            <td>
+                                <%= student.getBirthday() %>
+                            </td>
+                            <td>
+                                <form action="student-delete" method="post">
+                                    <input type="hidden" name="id" value="<%= student.getId() %>">
+                                    <input type="submit" value="Delete">
+                                </form>
+                            </td>
+                            <td>
+                                <form action="student-go-update" method="post">
+                                    <input type="hidden" name="id" value="<%= student.getId() %>">
+                                    <input type="submit" value="Update">
+                                </form>
+                            </td>
+                        </tr>
+                        <% } %>
+                    </table>
+                </div>
             </div>
-            <table  class="table table-striped">
-                <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Code</th>
-                    <th scope="col">Birthday</th>
-                    <th scope="col">Delete</th>
-                    <th scope="col">Update</th>
-                </tr>
-                <% List<Student> students = (List<Student>) request.getAttribute("students");
-                    for (Student student : students) {
-                %>
-                <tr>
-                    <td scope="row">
-                        <%= student.getId() %>
-                    </td>
-                    <td>
-                        <%= student.getName() %>
-                    </td>
-                    <td>
-                        <%= student.getCode() %>
-                    </td>
-                    <td>
-                        <%= student.getBirthday() %>
-                    </td>
-                    <td>
-                        <form action="student-delete" method="post">
-                            <input type="hidden" name="id" value="<%= student.getId() %>">
-                            <input type="submit" value="Delete">
-                        </form>
-                    </td>
-                    <td>
-                        <form action="student-go-update" method="post">
-                            <input type="hidden" name="id" value="<%= student.getId() %>">
-                            <input type="submit" value="Update">
-                        </form>
-                    </td>
-                </tr>
-                <% } %>
-            </table>
         </div>
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>

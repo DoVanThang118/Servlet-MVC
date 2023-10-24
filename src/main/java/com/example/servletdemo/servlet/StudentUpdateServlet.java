@@ -47,6 +47,7 @@ public class StudentUpdateServlet extends HttpServlet {
             List<Student> students = studentDAO.getAll();
             request.setAttribute("students", students);
             request.getRequestDispatcher("student.jsp").forward(request, response);
+            response.sendRedirect("/student-list");
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
